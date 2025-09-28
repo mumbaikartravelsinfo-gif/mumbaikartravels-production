@@ -23,13 +23,6 @@ const services = [
     features: ["Flight Tracking", "Meet & Greet", "Luggage Assistance"],
   },
   {
-    icon: Building,
-    title: "Corporate Solutions",
-    description: "Tailored transportation solutions for businesses with dedicated account management.",
-    image: "/corporate-car-hire-business-executive-sedan.jpg",
-    features: ["Dedicated Fleet", "Monthly Billing", "Priority Booking"],
-  },
-  {
     icon: Clock,
     title: "Hourly Rentals",
     description: "Flexible hourly car rentals for shopping, meetings, or multiple stops within the city.",
@@ -42,20 +35,6 @@ const services = [
     description: "Special occasion transportation with decorated vehicles and professional chauffeurs.",
     image: "/cab-hire-rental-service-professional-driver.jpg",
     features: ["Decorated Cars", "Special Rates", "Event Coordination"],
-  },
-  {
-    icon: Shield,
-    title: "VIP Services",
-    description: "Premium luxury vehicles with enhanced security and privacy for high-profile clients.",
-    image: "/24-hour-taxi-service-night-time-city-lights.jpg",
-    features: ["Luxury Fleet", "Enhanced Security", "Privacy Assured"],
-  },
-  {
-    icon: Users,
-    title: "Group Travel",
-    description: "Large capacity vehicles for family trips, group outings, and corporate events.",
-    image: "/car-outstation-travel-mountains-scenic-route.jpg",
-    features: ["Large Vehicles", "Group Discounts", "Luggage Space"],
   },
   {
     icon: Zap,

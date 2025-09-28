@@ -2,21 +2,24 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { MapPin, Calendar, Users, Phone } from "lucide-react"
+import { SwapButton } from "./swap-button"
 
 interface BookingModalProps {
   isOpen: boolean
   onClose: () => void
   serviceType?: string
+  selectedDestination?: string
+  selectedSource?: string
 }
 
-export function BookingModal({ isOpen, onClose, serviceType }: BookingModalProps) {
+export function BookingModal({ isOpen, onClose, serviceType, selectedDestination, selectedSource }: BookingModalProps) {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -25,6 +28,17 @@ export function BookingModal({ isOpen, onClose, serviceType }: BookingModalProps
     travelDate: "",
     passengers: "",
   })
+
+  // Pre-fill destination and source when provided
+  useEffect(() => {
+    if (isOpen) {
+      setFormData(prev => ({
+        ...prev,
+        dropLocation: selectedDestination || prev.dropLocation,
+        pickupLocation: selectedSource || prev.pickupLocation
+      }))
+    }
+  }, [selectedDestination, selectedSource, isOpen])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -53,6 +67,14 @@ Please provide me with the quote and availability.`
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
+  }
+
+  const handleSwap = () => {
+    setFormData((prev) => ({
+      ...prev,
+      pickupLocation: prev.dropLocation,
+      dropLocation: prev.pickupLocation
+    }))
   }
 
   return (
@@ -95,32 +117,40 @@ Please provide me with the quote and availability.`
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="pickup" className="flex items-center gap-2 mb-2">
-                <MapPin className="h-4 w-4 text-primary" />
-                From *
-              </Label>
-              <Input
-                id="pickup"
-                value={formData.pickupLocation}
-                onChange={(e) => handleInputChange("pickupLocation", e.target.value)}
-                placeholder="Pickup location"
-                required
-              />
-            </div>
-            <div>
-              <Label htmlFor="drop" className="flex items-center gap-2 mb-2">
-                <MapPin className="h-4 w-4 text-accent" />
-                To *
-              </Label>
-              <Input
-                id="drop"
-                value={formData.dropLocation}
-                onChange={(e) => handleInputChange("dropLocation", e.target.value)}
-                placeholder="Destination"
-                required
-              />
+          <div className="space-y-4">
+            <div className="flex items-end gap-3">
+              <div className="flex-1">
+                <Label htmlFor="pickup" className="flex items-center gap-2 mb-2">
+                  <MapPin className="h-4 w-4 text-primary" />
+                  From *
+                </Label>
+                <Input
+                  id="pickup"
+                  value={formData.pickupLocation}
+                  onChange={(e) => handleInputChange("pickupLocation", e.target.value)}
+                  placeholder="Pickup location"
+                  required
+                />
+              </div>
+              
+              {/* Swap Button */}
+              <div className="pb-1">
+                <SwapButton onSwap={handleSwap} />
+              </div>
+              
+              <div className="flex-1">
+                <Label htmlFor="drop" className="flex items-center gap-2 mb-2">
+                  <MapPin className="h-4 w-4 text-accent" />
+                  To *
+                </Label>
+                <Input
+                  id="drop"
+                  value={formData.dropLocation}
+                  onChange={(e) => handleInputChange("dropLocation", e.target.value)}
+                  placeholder="Destination"
+                  required
+                />
+              </div>
             </div>
           </div>
 
@@ -172,6 +202,27 @@ Please provide me with the quote and availability.`
             >
               Cancel
             </Button>
+          </div>
+
+          {/* Direct Contact Options */}
+          <div className="mt-6 pt-4 border-t border-gray-200">
+            <p className="text-sm text-gray-600 mb-3 text-center">Or contact us directly:</p>
+            <div className="flex gap-3">
+              <Button
+                type="button"
+                onClick={() => window.open("https://wa.me/917208491468", "_blank")}
+                className="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 font-semibold"
+              >
+                WhatsApp Chat
+              </Button>
+              <Button
+                type="button"
+                onClick={() => window.open("tel:+917208491468", "_self")}
+                className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 font-semibold"
+              >
+                Call Now
+              </Button>
+            </div>
           </div>
         </form>
       </DialogContent>

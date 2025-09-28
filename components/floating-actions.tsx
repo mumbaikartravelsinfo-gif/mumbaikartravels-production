@@ -17,7 +17,7 @@ export function FloatingActions() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+    <div className="fixed bottom-4 right-4 flex flex-col gap-3 z-50 md:bottom-6 md:right-6">
       {/* WhatsApp Button */}
       <Button
         onClick={handleWhatsAppClick}

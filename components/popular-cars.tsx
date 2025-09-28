@@ -4,52 +4,52 @@ import { Users, Fuel, Settings } from "lucide-react"
 
 const cars = [
   {
-    name: "Maruti Suzuki Wagon R",
-    brand: "WAGON R",
-    image: "/maruti-suzuki-wagon-r-white-car-side-view.jpg",
-    passengers: 4,
-    fuel: "Petrol",
-    transmission: "Manual",
+    name: "Ertiga",
+    brand: "ERTIGA",
+    image: "/placeholder.svg?height=200&width=300",
+    passengers: 6,
+    fuel: "Petrol/CNG",
+    pricePerKm: "₹18",
   },
   {
-    name: "Maruti Suzuki Dzire",
+    name: "Swift Dzire",
     brand: "DZIRE",
-    image: "/maruti-suzuki-dzire-sedan-silver-car.jpg",
+    image: "/placeholder.svg?height=200&width=300",
     passengers: 4,
-    fuel: "Petrol",
-    transmission: "Manual",
+    fuel: "Petrol/CNG",
+    pricePerKm: "₹16",
   },
   {
-    name: "Honda City",
-    brand: "HONDA",
-    image: "/honda-city-sedan-blue-car-premium.jpg",
-    passengers: 4,
-    fuel: "Petrol",
-    transmission: "Automatic",
-  },
-  {
-    name: "Toyota Innova",
-    brand: "TOYOTA",
-    image: "/toyota-innova-crysta-mpv-white-car-family.jpg",
+    name: "Innova",
+    brand: "INNOVA",
+    image: "/placeholder.svg?height=200&width=300",
     passengers: 7,
     fuel: "Diesel",
-    transmission: "Manual",
+    pricePerKm: "₹20",
   },
   {
-    name: "Chevrolet Tavera",
-    brand: "CHEVROLET",
+    name: "Innova Crysta",
+    brand: "CRYSTA",
     image: "/placeholder.svg?height=200&width=300",
-    passengers: 9,
+    passengers: 7,
     fuel: "Diesel",
-    transmission: "Manual",
+    pricePerKm: "₹22",
   },
   {
-    name: "Mahindra Xylo",
-    brand: "MUV",
+    name: "Traveller",
+    brand: "TRAVELLER",
     image: "/placeholder.svg?height=200&width=300",
-    passengers: 8,
+    passengers: 17,
     fuel: "Diesel",
-    transmission: "Manual",
+    pricePerKm: "₹28",
+  },
+  {
+    name: "Urbania",
+    brand: "URBANIA",
+    image: "/placeholder.svg?height=200&width=300",
+    passengers: 17,
+    fuel: "Diesel",
+    pricePerKm: "₹34",
   },
 ]
 
@@ -80,46 +80,52 @@ export function PopularCars() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {cars.map((car, index) => (
-            <Card
+            <div
               key={index}
-              className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-white border-0 shadow-lg"
+              className="bg-white rounded-2xl p-6 hover:shadow-xl transition-all duration-300 border border-gray-100"
             >
-              <CardContent className="p-6">
-                <div className="relative mb-6">
-                  <img
-                    src={car.image || "/placeholder.svg"}
-                    alt={car.name}
-                    className="w-full h-48 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-                    {car.brand}
-                  </div>
+              {/* Car Image */}
+              <div className="aspect-video overflow-hidden rounded-xl mb-4 relative bg-gray-50">
+                <img
+                  src={car.image || "/placeholder.svg"}
+                  alt={car.name}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+
+              {/* Car Type Badge */}
+              <div className="inline-block bg-primary text-white px-3 py-1 rounded-lg text-sm font-medium mb-4">
+                {car.brand}
+              </div>
+
+              {/* Description */}
+              <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
+                Spacious and powerful, ideal for long journeys or group travel with extra luggage.
+              </p>
+
+              {/* Specs */}
+              <div className="space-y-2 mb-6">
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground text-sm">Per KM</span>
+                  <span className="font-semibold text-foreground">{car.pricePerKm}</span>
                 </div>
-
-                <h3 className="text-xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
-                  {car.name}
-                </h3>
-
-                <div className="flex items-center justify-between text-sm text-muted-foreground mb-6">
-                  <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4" />
-                    <span>{car.passengers} Passengers</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Fuel className="h-4 w-4" />
-                    <span>{car.fuel}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Settings className="h-4 w-4" />
-                    <span>{car.transmission}</span>
-                  </div>
+                
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground text-sm">Capacity</span>
+                  <span className="font-semibold text-foreground">{car.passengers} Seater</span>
                 </div>
+                
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground text-sm">Fuel Type</span>
+                  <span className="font-semibold text-foreground">{car.fuel}</span>
+                </div>
+              </div>
 
-                <Button className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-all">
-                  Book Now
-                </Button>
-              </CardContent>
-            </Card>
+              {/* Book Now Button */}
+              <button className="block w-full bg-primary hover:bg-primary/90 text-white text-center py-3 rounded-xl font-medium transition-colors">
+                Book Now
+              </button>
+            </div>
           ))}
         </div>
       </div>

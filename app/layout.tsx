@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   description:
     "Book premium cab services and travel packages in Mumbai. Reliable, comfortable, and affordable transportation solutions.",
   generator: "v0.app",
+  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
 }
 
 export default function RootLayout({
@@ -20,7 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      </head>
+      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} overflow-x-hidden`}>
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
       </body>
