@@ -40,8 +40,38 @@ export function BookingModal({ isOpen, onClose, serviceType, selectedDestination
     }
   }, [selectedDestination, selectedSource, isOpen])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    try {
+      // Submit form data to Google Sheets
+      const response = await fetch('/api/submit-booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          pickupLocation: formData.pickupLocation,
+          dropLocation: formData.dropLocation,
+          travelDate: formData.travelDate,
+          passengers: formData.passengers,
+          serviceType: serviceType
+        })
+      })
+
+      const result = await response.json()
+      
+      if (result.success) {
+        console.log('Booking submitted to spreadsheet successfully')
+      } else {
+        console.warn('Spreadsheet submission failed, but continuing with WhatsApp')
+      }
+    } catch (error) {
+      console.error('Error submitting to spreadsheet:', error)
+      // Continue with WhatsApp even if spreadsheet fails
+    }
 
     // Create WhatsApp message with form data
     const message = `Hi! I would like to book a cab service.

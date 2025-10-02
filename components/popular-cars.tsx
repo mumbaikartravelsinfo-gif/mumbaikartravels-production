@@ -1,12 +1,16 @@
+"use client"
+
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Users, Fuel, Settings } from "lucide-react"
+import { BookingModal } from "./booking-modal"
 
 const cars = [
   {
     name: "Ertiga",
     brand: "ERTIGA",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "/cars/ertiga.png?height=200&width=300",
     passengers: 6,
     fuel: "Petrol/CNG",
     pricePerKm: "₹18",
@@ -14,7 +18,7 @@ const cars = [
   {
     name: "Swift Dzire",
     brand: "DZIRE",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "/cars/swift.png?height=200&width=300",
     passengers: 4,
     fuel: "Petrol/CNG",
     pricePerKm: "₹16",
@@ -22,7 +26,7 @@ const cars = [
   {
     name: "Innova",
     brand: "INNOVA",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "/cars/innova.png?height=200&width=300",
     passengers: 7,
     fuel: "Diesel",
     pricePerKm: "₹20",
@@ -30,7 +34,7 @@ const cars = [
   {
     name: "Innova Crysta",
     brand: "CRYSTA",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "/cars/innova crysta.png",
     passengers: 7,
     fuel: "Diesel",
     pricePerKm: "₹22",
@@ -38,7 +42,7 @@ const cars = [
   {
     name: "Traveller",
     brand: "TRAVELLER",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "/cars/traveller.png?height=200&width=300",
     passengers: 17,
     fuel: "Diesel",
     pricePerKm: "₹28",
@@ -46,7 +50,7 @@ const cars = [
   {
     name: "Urbania",
     brand: "URBANIA",
-    image: "/placeholder.svg?height=200&width=300",
+    image: "/cars/urbania.png?height=200&width=300",
     passengers: 17,
     fuel: "Diesel",
     pricePerKm: "₹34",
@@ -54,6 +58,14 @@ const cars = [
 ]
 
 export function PopularCars() {
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false)
+  const [selectedCar, setSelectedCar] = useState("")
+
+  const handleBookCar = (carName: string) => {
+    setSelectedCar(carName)
+    setIsBookingModalOpen(true)
+  }
+
   return (
     <section id="cars" className="py-20 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4">
@@ -64,18 +76,6 @@ export function PopularCars() {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
             Choose from our diverse fleet of well-maintained vehicles, perfect for every occasion and group size.
           </p>
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {["WAGON R", "DZIRE", "HONDA", "TOYOTA", "CHEVROLET", "MUV"].map((brand) => (
-            <Button
-              key={brand}
-              variant="outline"
-              className="hover:bg-primary hover:text-primary-foreground bg-transparent"
-            >
-              {brand}
-            </Button>
-          ))}
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -122,13 +122,24 @@ export function PopularCars() {
               </div>
 
               {/* Book Now Button */}
-              <button className="block w-full bg-primary hover:bg-primary/90 text-white text-center py-3 rounded-xl font-medium transition-colors">
+              <Button 
+                onClick={() => handleBookCar(car.name)}
+                className="w-full bg-primary hover:bg-primary/90 text-white py-3 font-medium transition-colors"
+              >
                 Book Now
-              </button>
+              </Button>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Booking Modal */}
+      <BookingModal
+        isOpen={isBookingModalOpen}
+        onClose={() => setIsBookingModalOpen(false)}
+        serviceType="car rental"
+        selectedDestination={selectedCar}
+      />
     </section>
   )
 }

@@ -60,10 +60,10 @@ export function Header() {
   }
 
   return (
-    <header ref={headerRef} className="bg-white shadow-sm sticky top-0 z-50">
+    <header ref={headerRef} className="bg-primary text-primary-foreground shadow-sm sticky top-0 z-50">
       {/* Top contact bar */}
-      <div className="bg-primary text-primary-foreground py-2 px-4">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between text-sm">
+      <div className="bg-black text-[#ff3131] py-2 px-4 hidden md:block">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-end text-sm">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
               <Phone className="h-4 w-4" />
@@ -71,39 +71,32 @@ export function Header() {
             </div>
             <div className="flex items-center gap-2">
               <Mail className="h-4 w-4" />
-              <span>info@mumbaikartravels.com</span>
+              <span>mumbaikartravelsinfo@gmail.com</span>
             </div>
           </div>
-          <Button variant="secondary" size="sm" className="hidden md:inline-flex">
-            {"Let's Ride Now"}
-          </Button>
         </div>
       </div>
 
       {/* Main navigation */}
-      <nav className="max-w-7xl mx-auto px-4 py-4">
+      <nav className="max-w-7xl mx-auto py-3 md:py-1">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="bg-primary text-primary-foreground p-2 rounded-lg">
-              <svg className="h-8 w-8" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.22.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">Mumbai Kar Travels</h1>
-              <p className="text-sm text-muted-foreground">Premium Travel Services</p>
-            </div>
+          <div className="flex items-center ">
+            <img 
+              src="/mumbai-kar-travels-logo.png" 
+              alt="Mumbai Kar Travels Logo" 
+              className="h-16 lg:h-16 w-auto object-contain"
+            />
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="/" className="text-foreground hover:text-primary font-medium">
+            <a href="/" className="text-foreground hover:text-primary-foreground/80 font-medium">
               Home
             </a>
-            <a href="/about" className="round hover:text-primary font-medium">
+            <a href="/about" className="text-foreground hover:text-primary-foreground/80 font-medium">
               About Us
             </a>
-            <a href="/#cars" className="text-foreground hover:text-primary font-medium">
+            <a href="/#cars" className="text-foreground hover:text-primary-foreground/80 font-medium">
               Services
             </a>
             
@@ -111,7 +104,7 @@ export function Header() {
             <div className="relative">
               <button
                 onClick={() => setActiveDropdown(activeDropdown === "sightseeing" ? "" : "sightseeing")}
-                className="flex items-center gap-1 text-foreground hover:text-primary font-medium"
+                className="flex items-center gap-1 text-foreground hover:text-primary-foreground font-medium"
               >
                 Sightseeing <ChevronDown className="h-4 w-4" />
               </button>
@@ -134,7 +127,7 @@ export function Header() {
             <div className="relative">
               <button
                 onClick={() => setActiveDropdown(activeDropdown === "pilgrimage" ? "" : "pilgrimage")}
-                className="flex items-center gap-1 text-foreground hover:text-primary font-medium"
+                className="flex items-center gap-1 text-foreground hover:text-primary-foreground font-medium"
               >
                 Pilgrimage <ChevronDown className="h-4 w-4" />
               </button>
@@ -157,7 +150,7 @@ export function Header() {
             <div className="relative">
               <button
                 onClick={() => setActiveDropdown(activeDropdown === "daily" ? "" : "daily")}
-                className="flex items-center gap-1 text-foreground hover:text-primary font-medium"
+                className="flex items-center gap-1 text-foreground hover:text-primary-foreground font-medium"
               >
                 Daily Services <ChevronDown className="h-4 w-4" />
               </button>
@@ -176,18 +169,12 @@ export function Header() {
               )}
             </div>
 
-            <a href="/#cars" className="text-foreground hover:text-primary font-medium">
+            <a href="/#cars" className="text-foreground hover:text-primary-foreground font-medium">
               Fleet
             </a>
-            <a href="/wordpress" className="text-foreground hover:text-primary font-medium">
+            <a href="/wordpress" className="text-foreground hover:text-primary-foreground font-medium">
               WordPress
             </a>
-            <button
-              onClick={() => handleDestinationClick("Contact Us")}
-              className="text-foreground hover:text-primary font-medium"
-            >
-              Contact Us
-            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -198,29 +185,29 @@ export function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-border">
+          <div className="md:hidden mt-4 pb-4 border-t border-white/20">
             <div className="flex flex-col gap-3 pt-4">
-              <a href="/" className="text-foreground hover:text-primary font-medium py-2" onClick={() => setIsMenuOpen(false)}>
+              <a href="/" className="text-white hover:text-white/80 font-medium py-2" onClick={() => setIsMenuOpen(false)}>
                 Home
               </a>
-              <a href="/about" className="text-foreground hover:text-primary font-medium py-2" onClick={() => setIsMenuOpen(false)}>
+              <a href="/about" className="text-white hover:text-white/80 font-medium py-2" onClick={() => setIsMenuOpen(false)}>
                 About Us
               </a>
-              <a href="/services" className="text-foreground hover:text-primary font-medium py-2" onClick={() => setIsMenuOpen(false)}>
+              <a href="/services" className="text-white hover:text-white/80 font-medium py-2" onClick={() => setIsMenuOpen(false)}>
                 Services
               </a>
               
               {/* Sightseeing Mobile Dropdown */}
-              <div className="border border-gray-200 rounded-lg overflow-hidden">
+              <div className="border border-white/20 rounded-lg overflow-hidden bg-white/5">
                 <button
                   onClick={() => toggleMobileDropdown('sightseeing')}
-                  className="w-full flex items-center justify-between p-3 bg-gray-50 text-foreground hover:bg-primary/10 transition-colors"
+                  className="w-full flex items-center justify-between p-3 text-white hover:bg-white/10 transition-colors"
                 >
                   <span className="font-medium">Sightseeing</span>
                   <ChevronDown className={`h-4 w-4 transition-transform ${mobileDropdowns.sightseeing ? 'rotate-180' : ''}`} />
                 </button>
                 {mobileDropdowns.sightseeing && (
-                  <div className="bg-white border-t border-gray-200">
+                  <div className="bg-white/10 border-t border-white/20">
                     {destinations.sightseeing.map((dest) => (
                       <button
                         key={dest}
@@ -231,7 +218,7 @@ export function Header() {
                           setMobileDropdowns({sightseeing: false, pilgrimage: false, daily: false});
                           handleDestinationClick(dest);
                         }}
-                        className="block w-full text-left p-3 text-sm text-foreground hover:bg-primary/5 hover:text-primary border-b border-gray-100 last:border-b-0"
+                        className="block w-full text-left p-3 text-sm text-white hover:bg-white/15 border-b border-white/10 last:border-b-0"
                       >
                         {dest}
                       </button>
@@ -241,16 +228,16 @@ export function Header() {
               </div>
               
               {/* Pilgrimage Mobile Dropdown */}
-              <div className="border border-gray-200 rounded-lg overflow-hidden">
+              <div className="border border-white/20 rounded-lg overflow-hidden bg-white/5">
                 <button
                   onClick={() => toggleMobileDropdown('pilgrimage')}
-                  className="w-full flex items-center justify-between p-3 bg-gray-50 text-foreground hover:bg-primary/10 transition-colors"
+                  className="w-full flex items-center justify-between p-3 text-white hover:bg-white/10 transition-colors"
                 >
                   <span className="font-medium">Pilgrimage Tours</span>
                   <ChevronDown className={`h-4 w-4 transition-transform ${mobileDropdowns.pilgrimage ? 'rotate-180' : ''}`} />
                 </button>
                 {mobileDropdowns.pilgrimage && (
-                  <div className="bg-white border-t border-gray-200">
+                  <div className="bg-white/10 border-t border-white/20">
                     {destinations.pilgrimage.map((dest) => (
                       <button
                         key={dest}
@@ -261,7 +248,7 @@ export function Header() {
                           setMobileDropdowns({sightseeing: false, pilgrimage: false, daily: false});
                           handleDestinationClick(dest);
                         }}
-                        className="block w-full text-left p-3 text-sm text-foreground hover:bg-primary/5 hover:text-primary border-b border-gray-100 last:border-b-0"
+                        className="block w-full text-left p-3 text-sm text-white hover:bg-white/15 border-b border-white/10 last:border-b-0"
                       >
                         {dest}
                       </button>
@@ -271,16 +258,16 @@ export function Header() {
               </div>
               
               {/* Daily Services Mobile Dropdown */}
-              <div className="border border-gray-200 rounded-lg overflow-hidden">
+              <div className="border border-white/20 rounded-lg overflow-hidden bg-white/5">
                 <button
                   onClick={() => toggleMobileDropdown('daily')}
-                  className="w-full flex items-center justify-between p-3 bg-gray-50 text-foreground hover:bg-primary/10 transition-colors"
+                  className="w-full flex items-center justify-between p-3 text-white hover:bg-white/10 transition-colors"
                 >
                   <span className="font-medium">Daily Services</span>
                   <ChevronDown className={`h-4 w-4 transition-transform ${mobileDropdowns.daily ? 'rotate-180' : ''}`} />
                 </button>
                 {mobileDropdowns.daily && (
-                  <div className="bg-white border-t border-gray-200">
+                  <div className="bg-white/10 border-t border-white/20">
                     {destinations.daily.map((dest) => (
                       <button
                         key={dest}
@@ -291,7 +278,7 @@ export function Header() {
                           setMobileDropdowns({sightseeing: false, pilgrimage: false, daily: false});
                           handleDestinationClick(dest, true);
                         }}
-                        className="block w-full text-left p-3 text-sm text-foreground hover:bg-primary/5 hover:text-primary border-b border-gray-100 last:border-b-0"
+                        className="block w-full text-left p-3 text-sm text-white hover:bg-white/15 border-b border-white/10 last:border-b-0"
                       >
                         {dest}
                       </button>
@@ -300,21 +287,12 @@ export function Header() {
                 )}
               </div>
               
-              <a href="/#cars" className="text-foreground hover:text-primary font-medium py-2" onClick={() => setIsMenuOpen(false)}>
+              <a href="/#cars" className="text-white hover:text-white/80 font-medium py-2" onClick={() => setIsMenuOpen(false)}>
                 Fleet
               </a>
-              <a href="/wordpress" className="text-foreground hover:text-primary font-medium py-2" onClick={() => setIsMenuOpen(false)}>
+              <a href="/wordpress" className="text-white hover:text-white/80 font-medium py-2" onClick={() => setIsMenuOpen(false)}>
                 WordPress
               </a>
-              <button
-                onClick={() => {
-                  setIsMenuOpen(false);
-                  handleDestinationClick("Contact Us");
-                }}
-                className="text-left text-foreground hover:text-primary font-medium py-2"
-              >
-                Contact Us
-              </button>
             </div>
           </div>
         )}

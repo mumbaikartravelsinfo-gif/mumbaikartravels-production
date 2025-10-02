@@ -10,8 +10,17 @@ export const metadata: Metadata = {
   title: "Mumbai Kar Travels - Premium Cab & Travel Services",
   description:
     "Book premium cab services and travel packages in Mumbai. Reliable, comfortable, and affordable transportation solutions.",
-  generator: "v0.app",
+  generator: "Mumbai Kar Travels",
   viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/mumbai-kar-travels-logo.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/mumbai-kar-travels-logo.png' },
+    ],
+  },
 }
 
 export default function RootLayout({

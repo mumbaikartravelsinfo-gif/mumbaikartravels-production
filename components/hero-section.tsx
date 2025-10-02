@@ -26,8 +26,38 @@ export function HeroSection() {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
-  const handleBookNow = (e: React.FormEvent) => {
+  const handleBookNow = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    try {
+      // Submit form data to Google Sheets
+      const response = await fetch('/api/submit-booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          pickupLocation: formData.pickupLocation,
+          dropLocation: formData.dropLocation,
+          travelDate: formData.travelDate,
+          passengers: formData.passengers,
+          serviceType: tripType
+        })
+      })
+
+      const result = await response.json()
+      
+      if (result.success) {
+        console.log('Booking submitted to spreadsheet successfully')
+      } else {
+        console.warn('Spreadsheet submission failed, but continuing with WhatsApp')
+      }
+    } catch (error) {
+      console.error('Error submitting to spreadsheet:', error)
+      // Continue with WhatsApp even if spreadsheet fails
+    }
     
     // Create WhatsApp message with form data
     const message = `Hi! I would like to book a cab service.
@@ -60,7 +90,7 @@ Please provide me with the quote and availability.`
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('/mumbai-taxi-street-scene-vibrant-yellow-cab.jpg')`,
+          backgroundImage: `url('/mumbai-taxi-street-scene-vibrant-yellow-cab.png')`,
         }}
       >
         <div className="absolute inset-0 bg-black/50"></div>
@@ -73,7 +103,7 @@ Please provide me with the quote and availability.`
               Mumbai's Premier <span className="text-primary">Taxi Service</span>
             </h1>
             <p className="text-lg sm:text-xl mb-6 sm:mb-8 text-pretty leading-relaxed max-w-2xl mx-auto">
-              Professional drivers, luxury vehicles, and unmatched reliability for all your Mumbai travel needs.
+              Professional drivers, luxury vehicles, and unmatched reliability for all your travel needs.
             </p>
           </div>
         </div>
