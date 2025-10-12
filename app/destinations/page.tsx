@@ -4,7 +4,7 @@ import { Footer } from "@/components/footer"
 import { FloatingActions } from "@/components/floating-actions"
 
 export const metadata: Metadata = {
-  title: "Popular Travel Destinations from Mumbai | Mumbai Kar Travels",
+  title: "Popular Travel Destinations from Mumbai | Mumbaikar Travels",
   description:
     "Discover amazing travel destinations from Mumbai. Visit Lonavala, Mahabaleshwar, Alibaug, Shirdi, Pune and more. Affordable outstation cab packages with professional drivers.",
   keywords: "Mumbai to Lonavala cab, Mumbai to Mahabaleshwar taxi, Mumbai to Alibaug car rental, Mumbai to Shirdi cab booking, Mumbai to Pune taxi service, outstation cab Mumbai",

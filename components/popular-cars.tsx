@@ -34,7 +34,7 @@ const cars = [
   {
     name: "Innova Crysta",
     brand: "CRYSTA",
-    image: "/cars/innova crysta.png",
+    image: "/cars/crysta.jpg",
     passengers: 7,
     fuel: "Diesel",
     pricePerKm: "₹22",

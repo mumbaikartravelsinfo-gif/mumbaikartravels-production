@@ -5,7 +5,7 @@
     import { Footer } from "@/components/footer"
     import { FloatingActions } from "@/components/floating-actions"
     import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-    import { getPosts, getPages, type WordPressPost, type WordPressPage } from "@/lib/wordpress-api" 
+    import { getPosts, type WordPressPost } from "@/lib/wordpress-api" 
     import { Calendar, User, ImageOff } from "lucide-react"
     import { useEffect, useState } from "react"
 
@@ -40,7 +40,6 @@
 
     export default function WordPressPage() {
     const [posts, setPosts] = useState<WordPressPost[]>([])
-    const [pages, setPages] = useState<WordPressPage[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
 
@@ -48,12 +47,8 @@
         async function fetchData() {
         try {
             setLoading(true)
-            const [postsData, pagesData] = await Promise.all([
-            getPosts(),
-            getPages()
-            ])
+            const postsData = await getPosts()
             setPosts(postsData)
-            setPages(pagesData)
         } catch (err) {
             setError('Failed to fetch WordPress content')
             console.error('Error fetching WordPress data:', err)
@@ -120,77 +115,131 @@
         <main className="min-h-screen">
         <Header />
         
-        <div className="pt-24 pb-16">
-            <div className="max-w-7xl mx-auto px-4">
+        {/* Custom styles for WordPress content */}
+        <style jsx global>{`
+            .article-content .wp-block-heading,
+            .article-content h2,
+            .article-content h3,
+            .article-content h4 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+            }
+            
+            .article-content h3 {
+            font-size: 1.5rem;
+            }
+            
+            .article-content h4 {
+            font-size: 1.25rem;
+            }
+            
+            .article-content p {
+            font-size: 1.125rem;
+            line-height: 1.75;
+            color: #374151;
+            margin-bottom: 1.5rem;
+            }
+            
+            .article-content blockquote {
+            border-left: 4px solid #ff3131;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #6b7280;
+            }
+            
+            .article-content blockquote p {
+            margin-bottom: 0.5rem;
+            }
+            
+            .article-content a {
+            color: #ff3131;
+            text-decoration: underline;
+            }
+            
+            .article-content a:hover {
+            color: #cc2727;
+            }
+            
+            .article-content ul,
+            .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+            }
+            
+            .article-content li {
+            margin-bottom: 0.75rem;
+            font-size: 1.125rem;
+            line-height: 1.75;
+            color: #374151;
+            }
+        `}</style>
+        
+        <div className="pt-24 pb-16 bg-white">
+            <div className="max-w-4xl mx-auto px-4">
             {/* Header Section */}
-            <div className="text-center mb-12">
+            <div className="text-center mb-16">
                 <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                WordPress Content
+                Travel Articles & Blog
                 </h1>
                 <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Latest updates, articles, and information from our WordPress site
+                Latest travel guides, tips, and updates from Mumbai Kar Travels
                 </p>
             </div>
 
-            {/* Posts Section */}
-            {posts.length > 0 && (
-                <div className="mb-16">
-                <h2 className="text-3xl font-bold mb-8 text-center">Latest Blog Posts</h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {posts.map((post) => (
-                    <div key={post.id} className="bg-gradient-to-br from-primary to-primary/80 rounded-2xl p-6 text-white hover:shadow-xl transition-all duration-300">
-                        {/* Featured Image */}
-                        {post._embedded?.['wp:featuredmedia']?.[0] && (
-                        <div className="aspect-video overflow-hidden rounded-xl mb-4 relative bg-white/10">
-                            <WordPressImage
+            {/* Blog Posts Section */}
+            {posts.length > 0 ? (
+                <div className="space-y-16">
+                {posts.map((post, index) => (
+                    <article key={post.id} className="prose prose-lg max-w-none">
+                    {/* Post Header */}
+                    <div className="mb-8 pb-6 border-b-2 border-gray-200">
+                        <h1 
+                        className="text-4xl font-bold text-gray-900 mb-4"
+                        dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                        />
+                        <div className="flex items-center gap-4 text-sm text-gray-600">
+                        <span className="flex items-center gap-2">
+                            <Calendar className="h-4 w-4" />
+                            {new Date(post.date).toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric' 
+                            })}
+                        </span>
+                        </div>
+                    </div>
+
+                    {/* Featured Image */}
+                    {post._embedded?.['wp:featuredmedia']?.[0] && (
+                        <div className="mb-8 rounded-lg overflow-hidden">
+                        <img
                             src={post._embedded['wp:featuredmedia'][0].source_url}
                             alt={post._embedded['wp:featuredmedia'][0].alt_text || post.title.rendered}
-                            className="w-full h-full"
-                            />
-                        </div>
-                        )}
-                        
-                        {/* Category Badge */}
-                        <div className="inline-block bg-black/20 px-3 py-1 rounded-lg text-sm font-medium mb-4">
-                            BLOG
-                        </div>
-                        
-                        {/* Description */}
-                        <div 
-                            className="text-white/90 mb-6 line-clamp-2 text-sm leading-relaxed"
-                            dangerouslySetInnerHTML={{ __html: post.excerpt.rendered.replace(/<[^>]*>/g, '') }}
+                            className="w-full h-auto object-cover"
                         />
-                        
-                        {/* Specs */}
-                        <div className="space-y-2 mb-6">
-                            <div className="flex justify-between items-center">
-                                <span className="text-white/80 text-sm">Published</span>
-                                <span className="font-semibold">{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-                            </div>
-                            
-                            <div className="flex justify-between items-center">
-                                <span className="text-white/80 text-sm">Category</span>
-                                <span className="font-semibold">Article</span>
-                            </div>
                         </div>
-                        
-                        {/* Book Now Button */}
-                        <a
-                            href={`https://krishtiwari.xyz/${post.slug}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block w-full bg-white/15 hover:bg-white/25 text-center py-3 rounded-xl font-medium transition-colors backdrop-blur-sm border border-white/20"
-                        >
-                            Read More
-                        </a>
-                    </div>
-                    ))}
-                </div>
-                </div>
-            )}
+                    )}
 
-            {/* No Content Message */}
-            {posts.length === 0 && pages.length === 0 && (
+                    {/* Post Content */}
+                    <div 
+                        className="article-content text-gray-800 leading-relaxed"
+                        dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+                    />
+
+                    {/* Separator between posts */}
+                    {index < posts.length - 1 && (
+                        <hr className="my-16 border-t-2 border-gray-300" />
+                    )}
+                    </article>
+                ))}
+                </div>
+            ) : (
+                /* No Content Message */
                 <div className="text-center py-16">
                 <div className="max-w-md mx-auto">
                     <h3 className="text-xl font-semibold mb-4">No Content Available</h3>

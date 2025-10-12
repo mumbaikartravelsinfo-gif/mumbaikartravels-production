@@ -6,7 +6,7 @@ import { Footer } from "@/components/footer"
 import { FloatingActions } from "@/components/floating-actions"
 
 export const metadata: Metadata = {
-  title: "Premium Cab Services in Mumbai | Mumbai Kar Travels",
+  title: "Premium Cab Services in Mumbai | Mumbaikar Travels",
   description:
     "Explore our comprehensive taxi and cab services in Mumbai. Airport transfers, outstation travel, corporate solutions, hourly rentals, wedding transportation and more. Book now for reliable service.",
   keywords: "Mumbai taxi services, cab booking Mumbai, airport transfer Mumbai, corporate cab services, outstation travel Mumbai, wedding car rental Mumbai",

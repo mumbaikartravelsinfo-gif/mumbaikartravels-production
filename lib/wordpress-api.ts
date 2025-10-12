@@ -1,4 +1,4 @@
-const WORDPRESS_API_URL = 'https://krishtiwari.xyz/wp-json/wp/v2'
+const WORDPRESS_API_URL = 'https://public-api.wordpress.com/wp/v2/sites/mumbaikartravelsinfo-xkgir.wordpress.com'
 
 export interface WordPressPost {
   id: number
@@ -35,7 +35,7 @@ export interface WordPressPage {
 // Fetch all posts with embedded media
 export async function getPosts(): Promise<WordPressPost[]> {
   try {
-    const response = await fetch(`${WORDPRESS_API_URL}/posts?_embed&per_page=10`, {
+    const response = await fetch(`${WORDPRESS_API_URL}/posts?_embed&per_page=100&orderby=date&order=desc`, {
       next: { revalidate: 300 } // Revalidate every 5 minutes
     })
     if (!response.ok) {
@@ -96,6 +96,38 @@ export async function getPageBySlug(slug: string): Promise<WordPressPage | null>
     return Array.isArray(pages) && pages.length > 0 ? pages[0] : null
   } catch (error) {
     console.error('Error fetching WordPress page by slug:', error)
+    return null
+  }
+}
+
+// Fetch articles page specifically
+export async function getArticlesPage(): Promise<WordPressPage | null> {
+  try {
+    // First try to fetch by slug 'article'
+    const response = await fetch(`${WORDPRESS_API_URL}/posts?slug=article&_embed`, {
+      next: { revalidate: 300 }
+    })
+    if (!response.ok) {
+      throw new Error(`Failed to fetch article: ${response.status}`)
+    }
+    const posts = await response.json()
+    
+    // If found as a post, convert it to page format
+    if (Array.isArray(posts) && posts.length > 0) {
+      return posts[0] as unknown as WordPressPage
+    }
+    
+    // Otherwise try as a page
+    const pageResponse = await fetch(`${WORDPRESS_API_URL}/pages?slug=article&_embed`, {
+      next: { revalidate: 300 }
+    })
+    if (!pageResponse.ok) {
+      throw new Error(`Failed to fetch article page: ${pageResponse.status}`)
+    }
+    const pages = await pageResponse.json()
+    return Array.isArray(pages) && pages.length > 0 ? pages[0] : null
+  } catch (error) {
+    console.error('Error fetching article:', error)
     return null
   }
 }

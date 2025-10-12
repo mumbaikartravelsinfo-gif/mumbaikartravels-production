@@ -12,7 +12,7 @@ export function Footer() {
             <div className="flex items-center justify-center gap-2 mb-2">
               <img 
                 src="/mumbaikar-logo-footer.png" 
-                alt="Mumbai Kar Travels Logo" 
+                alt="Mumbaikar Travels Logo" 
                 className="h-36 w-auto object-contain"
               />
             </div>
@@ -137,7 +137,7 @@ export function Footer() {
 
         <div className="border-t border-background/20 mt-12 pt-8 text-center">
           <p className="text-background/70">
-            © 2025 Mumbai Kar Travels. All rights reserved. | Privacy Policy | Terms & Conditions
+            © 2025 Mumbaikar Travels. All rights reserved. | Privacy Policy | Terms & Conditions
           </p>
         </div>
       </div>

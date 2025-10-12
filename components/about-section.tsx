@@ -25,7 +25,7 @@ export function AboutSection() {
               Best Taxi Service In Thane & Mumbai With Affordable Prices
             </h2>
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              We, Mumbai Kar Travels situated at Mumbai, Navi Mumbai, Maharashtra, are a leading service provider of a
+              We, Mumbaikar Travels situated at Mumbai, Navi Mumbai, Maharashtra, are a leading service provider of a
               wide range of Cars on hire. We have well maintained & luxurious cars which help to make your travel
               comfortable and amazing. We are passionate & professional at the same time which help you to get the best
               service from us. We are committed to serve our clients in the best way and have solutions.

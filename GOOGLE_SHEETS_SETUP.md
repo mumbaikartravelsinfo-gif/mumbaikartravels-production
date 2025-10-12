@@ -4,7 +4,7 @@
 
 1. Go to [Google Sheets](https://sheets.google.com)
 2. Create a new spreadsheet
-3. Name it "Mumbai Kar Travels - Bookings" (or any name you prefer)
+3. Name it "Mumbaikar Travels - Bookings" (or any name you prefer)
 4. Add these column headers in row 1:
    - A1: Timestamp
    - B1: Name
@@ -153,7 +153,7 @@ function debugFunction() {
 ```
 
 4. Replace `YOUR_SPREADSHEET_ID_HERE` with your actual spreadsheet ID
-5. Save the project (Ctrl+S) and name it "Mumbai Kar Travels Form Handler"
+5. Save the project (Ctrl+S) and name it "Mumbaikar Travels Form Handler"
 
 ## Step 3: Get Spreadsheet ID
 
@@ -166,7 +166,7 @@ function debugFunction() {
 1. In Apps Script, click "Deploy" > "New Deployment"
 2. Click the gear icon next to "Type" and select "Web app"
 3. Set these options:
-   - Description: "Mumbai Kar Travels Form Handler"
+   - Description: "Mumbaikar Travels Form Handler"
    - Execute as: "Me"
    - Who has access: "Anyone"
 4. Click "Deploy"

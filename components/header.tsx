@@ -63,7 +63,7 @@ export function Header() {
     <header ref={headerRef} className="bg-primary text-primary-foreground shadow-sm sticky top-0 z-50">
       {/* Top contact bar */}
       <div className="bg-black text-[#ff3131] py-2 px-4 hidden md:block">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-end text-sm">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between text-sm">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
               <Phone className="h-4 w-4" />
@@ -78,14 +78,19 @@ export function Header() {
       </div>
 
       {/* Main navigation */}
-      <nav className="max-w-7xl mx-auto py-3 md:py-1">
+      <nav className="max-w-7xl mx-auto px-4 py-3 md:py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center ">
+          {/* Logo and Company Name */}
+          <div className="flex items-center gap-3">
             <img 
               src="/mumbai-kar-travels-logo.png" 
-              alt="Mumbai Kar Travels Logo" 
-              className="h-16 lg:h-16 w-auto object-contain"
+              alt="Mumbaikar Travels Logo" 
+              className="h-12 md:h-14 w-auto object-contain"
             />
+            <div>
+              <h1 className="text-base md:text-lg font-bold text-primary-foreground">Mumbaikar Travels</h1>
+              <p className="text-xs text-primary-foreground/70 hidden sm:block">Premium Cab Service</p>
+            </div>
           </div>
 
           {/* Desktop Navigation */}
@@ -178,36 +183,57 @@ export function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="md:hidden p-2 hover:bg-white/10 transition-colors" 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? (
+              <X className="h-6 w-6 text-white" />
+            ) : (
+              <Menu className="h-6 w-6 text-white" />
+            )}
           </Button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-white/20">
-            <div className="flex flex-col gap-3 pt-4">
-              <a href="/" className="text-white hover:text-white/80 font-medium py-2" onClick={() => setIsMenuOpen(false)}>
+          <div className="md:hidden mt-6 px-4 pb-6 border-t border-white/20">
+            <div className="flex flex-col gap-4 pt-6">
+              <a 
+                href="/" 
+                className="text-white hover:text-white/80 font-medium py-3 px-3 rounded-lg hover:bg-white/10 transition-all" 
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Home
               </a>
-              <a href="/about" className="text-white hover:text-white/80 font-medium py-2" onClick={() => setIsMenuOpen(false)}>
+              <a 
+                href="/about" 
+                className="text-white hover:text-white/80 font-medium py-3 px-3 rounded-lg hover:bg-white/10 transition-all" 
+                onClick={() => setIsMenuOpen(false)}
+              >
                 About Us
               </a>
-              <a href="/services" className="text-white hover:text-white/80 font-medium py-2" onClick={() => setIsMenuOpen(false)}>
+              <a 
+                href="/services" 
+                className="text-white hover:text-white/80 font-medium py-3 px-3 rounded-lg hover:bg-white/10 transition-all" 
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Services
               </a>
               
               {/* Sightseeing Mobile Dropdown */}
-              <div className="border border-white/20 rounded-lg overflow-hidden bg-white/5">
+              <div className="border border-white/30 rounded-xl overflow-hidden bg-white/10 shadow-lg">
                 <button
                   onClick={() => toggleMobileDropdown('sightseeing')}
-                  className="w-full flex items-center justify-between p-3 text-white hover:bg-white/10 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-white hover:bg-white/15 transition-colors"
                 >
-                  <span className="font-medium">Sightseeing</span>
-                  <ChevronDown className={`h-4 w-4 transition-transform ${mobileDropdowns.sightseeing ? 'rotate-180' : ''}`} />
+                  <span className="font-medium text-base">Sightseeing</span>
+                  <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${mobileDropdowns.sightseeing ? 'rotate-180' : ''}`} />
                 </button>
                 {mobileDropdowns.sightseeing && (
-                  <div className="bg-white/10 border-t border-white/20">
+                  <div className="bg-white/15 border-t border-white/20">
                     {destinations.sightseeing.map((dest) => (
                       <button
                         key={dest}
@@ -218,7 +244,7 @@ export function Header() {
                           setMobileDropdowns({sightseeing: false, pilgrimage: false, daily: false});
                           handleDestinationClick(dest);
                         }}
-                        className="block w-full text-left p-3 text-sm text-white hover:bg-white/15 border-b border-white/10 last:border-b-0"
+                        className="block w-full text-left p-4 text-sm text-white hover:bg-white/20 border-b border-white/10 last:border-b-0 transition-colors"
                       >
                         {dest}
                       </button>
@@ -228,16 +254,16 @@ export function Header() {
               </div>
               
               {/* Pilgrimage Mobile Dropdown */}
-              <div className="border border-white/20 rounded-lg overflow-hidden bg-white/5">
+              <div className="border border-white/30 rounded-xl overflow-hidden bg-white/10 shadow-lg">
                 <button
                   onClick={() => toggleMobileDropdown('pilgrimage')}
-                  className="w-full flex items-center justify-between p-3 text-white hover:bg-white/10 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-white hover:bg-white/15 transition-colors"
                 >
-                  <span className="font-medium">Pilgrimage Tours</span>
-                  <ChevronDown className={`h-4 w-4 transition-transform ${mobileDropdowns.pilgrimage ? 'rotate-180' : ''}`} />
+                  <span className="font-medium text-base">Pilgrimage Tours</span>
+                  <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${mobileDropdowns.pilgrimage ? 'rotate-180' : ''}`} />
                 </button>
                 {mobileDropdowns.pilgrimage && (
-                  <div className="bg-white/10 border-t border-white/20">
+                  <div className="bg-white/15 border-t border-white/20">
                     {destinations.pilgrimage.map((dest) => (
                       <button
                         key={dest}
@@ -248,7 +274,7 @@ export function Header() {
                           setMobileDropdowns({sightseeing: false, pilgrimage: false, daily: false});
                           handleDestinationClick(dest);
                         }}
-                        className="block w-full text-left p-3 text-sm text-white hover:bg-white/15 border-b border-white/10 last:border-b-0"
+                        className="block w-full text-left p-4 text-sm text-white hover:bg-white/20 border-b border-white/10 last:border-b-0 transition-colors"
                       >
                         {dest}
                       </button>
@@ -258,16 +284,16 @@ export function Header() {
               </div>
               
               {/* Daily Services Mobile Dropdown */}
-              <div className="border border-white/20 rounded-lg overflow-hidden bg-white/5">
+              <div className="border border-white/30 rounded-xl overflow-hidden bg-white/10 shadow-lg">
                 <button
                   onClick={() => toggleMobileDropdown('daily')}
-                  className="w-full flex items-center justify-between p-3 text-white hover:bg-white/10 transition-colors"
+                  className="w-full flex items-center justify-between p-4 text-white hover:bg-white/15 transition-colors"
                 >
-                  <span className="font-medium">Daily Services</span>
-                  <ChevronDown className={`h-4 w-4 transition-transform ${mobileDropdowns.daily ? 'rotate-180' : ''}`} />
+                  <span className="font-medium text-base">Daily Services</span>
+                  <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${mobileDropdowns.daily ? 'rotate-180' : ''}`} />
                 </button>
                 {mobileDropdowns.daily && (
-                  <div className="bg-white/10 border-t border-white/20">
+                  <div className="bg-white/15 border-t border-white/20">
                     {destinations.daily.map((dest) => (
                       <button
                         key={dest}
@@ -278,7 +304,7 @@ export function Header() {
                           setMobileDropdowns({sightseeing: false, pilgrimage: false, daily: false});
                           handleDestinationClick(dest, true);
                         }}
-                        className="block w-full text-left p-3 text-sm text-white hover:bg-white/15 border-b border-white/10 last:border-b-0"
+                        className="block w-full text-left p-4 text-sm text-white hover:bg-white/20 border-b border-white/10 last:border-b-0 transition-colors"
                       >
                         {dest}
                       </button>
@@ -287,10 +313,18 @@ export function Header() {
                 )}
               </div>
               
-              <a href="/#cars" className="text-white hover:text-white/80 font-medium py-2" onClick={() => setIsMenuOpen(false)}>
+              <a 
+                href="/#cars" 
+                className="text-white hover:text-white/80 font-medium py-3 px-3 rounded-lg hover:bg-white/10 transition-all" 
+                onClick={() => setIsMenuOpen(false)}
+              >
                 Fleet
               </a>
-              <a href="/wordpress" className="text-white hover:text-white/80 font-medium py-2" onClick={() => setIsMenuOpen(false)}>
+              <a 
+                href="/wordpress" 
+                className="text-white hover:text-white/80 font-medium py-3 px-3 rounded-lg hover:bg-white/10 transition-all" 
+                onClick={() => setIsMenuOpen(false)}
+              >
                 WordPress
               </a>
             </div>
