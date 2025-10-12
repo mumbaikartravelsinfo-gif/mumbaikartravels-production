@@ -6,8 +6,16 @@
     import { FloatingActions } from "@/components/floating-actions"
     import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
     import { getPosts, type WordPressPost } from "@/lib/wordpress-api" 
-    import { Calendar, User, ImageOff } from "lucide-react"
-    import { useEffect, useState } from "react"
+    import { Calendar, User, ImageOff, Search, List } from "lucide-react"
+    import { useEffect, useState, useRef } from "react"
+
+    // Interface for heading navigation
+    interface Heading {
+        id: string
+        text: string
+        postId: number
+        postTitle: string
+    }
 
     // Since we're using 'use client', we need to handle data fetching differently
     // We'll fetch data in useEffect instead of using async/await at the component level
@@ -40,8 +48,12 @@
 
     export default function WordPressPage() {
     const [posts, setPosts] = useState<WordPressPost[]>([])
+    const [headings, setHeadings] = useState<Heading[]>([])
+    const [activeHeading, setActiveHeading] = useState<string>('')
+    const [searchQuery, setSearchQuery] = useState('')
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
+    const contentRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         async function fetchData() {
@@ -49,6 +61,30 @@
             setLoading(true)
             const postsData = await getPosts()
             setPosts(postsData)
+            
+            // Extract headings from posts
+            const allHeadings: Heading[] = []
+            postsData.forEach(post => {
+                const tempDiv = document.createElement('div')
+                tempDiv.innerHTML = post.content.rendered
+                const headingElements = tempDiv.querySelectorAll('.wp-block-heading, h2, h3, h4')
+                
+                headingElements.forEach((heading, index) => {
+                    const headingId = `heading-${post.id}-${index}`
+                    const headingText = heading.textContent || ''
+                    
+                    if (headingText.trim()) {
+                        allHeadings.push({
+                            id: headingId,
+                            text: headingText,
+                            postId: post.id,
+                            postTitle: post.title.rendered.replace(/<[^>]*>/g, '')
+                        })
+                    }
+                })
+            })
+            
+            setHeadings(allHeadings)
         } catch (err) {
             setError('Failed to fetch WordPress content')
             console.error('Error fetching WordPress data:', err)
@@ -60,6 +96,54 @@
         fetchData()
     }, [])
 
+    // Function to add IDs to headings in HTML content
+    const addHeadingIds = (content: string, postId: number) => {
+        const tempDiv = document.createElement('div')
+        tempDiv.innerHTML = content
+        const headingElements = tempDiv.querySelectorAll('.wp-block-heading, h2, h3, h4')
+        
+        headingElements.forEach((heading, index) => {
+            const headingId = `heading-${postId}-${index}`
+            heading.id = headingId
+        })
+        
+        return tempDiv.innerHTML
+    }
+
+    // Scroll to heading
+    const scrollToHeading = (headingId: string) => {
+        const element = document.getElementById(headingId)
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            setActiveHeading(headingId)
+        }
+    }
+
+    // Filter headings based on search query
+    const filteredHeadings = headings.filter(heading =>
+        heading.text.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        heading.postTitle.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+
+    // Intersection Observer for active heading
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setActiveHeading(entry.target.id)
+                    }
+                })
+            },
+            { rootMargin: '-100px 0px -80% 0px' }
+        )
+
+        const headingElements = document.querySelectorAll('[id^="heading-"]')
+        headingElements.forEach((el) => observer.observe(el))
+
+        return () => observer.disconnect()
+    }, [posts])
+
     if (loading) {
         return (
         <main className="min-h-screen">
@@ -68,11 +152,10 @@
             <div className="max-w-7xl mx-auto px-4">
                 <div className="text-center">
                 <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                    WordPress Content
                 </h1>
                 <div className="flex justify-center items-center py-20">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                    <span className="ml-4 text-lg">Loading WordPress content...</span>
+                    <span className="ml-4 text-lg">Loading...</span>
                 </div>
                 </div>
             </div>
@@ -91,7 +174,6 @@
             <div className="max-w-7xl mx-auto px-4">
                 <div className="text-center">
                 <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                    WordPress Content
                 </h1>
                 <div className="py-20">
                     <p className="text-red-500 text-lg">{error}</p>
@@ -177,10 +259,35 @@
             line-height: 1.75;
             color: #374151;
             }
+            
+            .sidebar-nav {
+            position: sticky;
+            top: 100px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            }
+            
+            .sidebar-nav::-webkit-scrollbar {
+            width: 6px;
+            }
+            
+            .sidebar-nav::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+            }
+            
+            .sidebar-nav::-webkit-scrollbar-thumb {
+            background: #ff3131;
+            border-radius: 10px;
+            }
+            
+            .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background: #cc2727;
+            }
         `}</style>
         
         <div className="pt-24 pb-16 bg-white">
-            <div className="max-w-4xl mx-auto px-4">
+            <div className="max-w-7xl mx-auto px-4">
             {/* Header Section */}
             <div className="text-center mb-16">
                 <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
@@ -191,17 +298,64 @@
                 </p>
             </div>
 
-            {/* Blog Posts Section */}
+            {/* Main Content with Sidebar */}
+            <div className="flex flex-col lg:flex-row gap-8">
+                {/* Sidebar Navigation */}
+                <aside className="lg:w-80 flex-shrink-0">
+                <div className="sidebar-nav bg-gray-50 rounded-lg p-6 border border-gray-200">
+                    {/* Search Box */}
+                    <div className="mb-6">
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                        <input
+                        type="text"
+                        placeholder="Search headings..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                        />
+                    </div>
+                    </div>
+
+                    {/* Table of Contents */}
+                    <div>
+                    <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-300">
+                        <List className="h-5 w-5 text-primary" />
+                        <h3 className="font-bold text-gray-900">Table of Contents</h3>
+                    </div>
+
+                    {filteredHeadings.length > 0 ? (
+                        <nav className="space-y-1">
+                        {filteredHeadings.map((heading) => (
+                            <button
+                            key={heading.id}
+                            onClick={() => scrollToHeading(heading.id)}
+                            className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
+                                activeHeading === heading.id
+                                ? 'bg-primary text-white font-medium'
+                                : 'text-gray-700 hover:bg-gray-200'
+                            }`}
+                            >
+                            <div className="font-medium truncate">{heading.text}</div>
+                            <div className="text-xs opacity-75 truncate">{heading.postTitle}</div>
+                            </button>
+                        ))}
+                        </nav>
+                    ) : (
+                        <p className="text-sm text-gray-500 italic">No headings found</p>
+                    )}
+                    </div>
+                </div>
+                </aside>
+
+                {/* Blog Posts Content */}
+                <div className="flex-1 min-w-0" ref={contentRef}>
             {posts.length > 0 ? (
                 <div className="space-y-16">
                 {posts.map((post, index) => (
                     <article key={post.id} className="prose prose-lg max-w-none">
                     {/* Post Header */}
                     <div className="mb-8 pb-6 border-b-2 border-gray-200">
-                        <h1 
-                        className="text-4xl font-bold text-gray-900 mb-4"
-                        dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-                        />
                         <div className="flex items-center gap-4 text-sm text-gray-600">
                         <span className="flex items-center gap-2">
                             <Calendar className="h-4 w-4" />
@@ -228,7 +382,7 @@
                     {/* Post Content */}
                     <div 
                         className="article-content text-gray-800 leading-relaxed"
-                        dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+                        dangerouslySetInnerHTML={{ __html: addHeadingIds(post.content.rendered, post.id) }}
                     />
 
                     {/* Separator between posts */}
@@ -249,6 +403,8 @@
                 </div>
                 </div>
             )}
+                </div>
+            </div>
             </div>
         </div>
 

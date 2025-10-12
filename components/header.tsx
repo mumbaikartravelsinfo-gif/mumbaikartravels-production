@@ -78,19 +78,24 @@ export function Header() {
       </div>
 
       {/* Main navigation */}
-      <nav className="max-w-7xl mx-auto px-4 py-3 md:py-4">
+      <nav className="px-4 py-3">
         <div className="flex items-center justify-between">
-          {/* Logo and Company Name */}
-          <div className="flex items-center gap-3">
+          {/* Logo */}
+          <div className="flex items-center">
             <img 
               src="/mumbai-kar-travels-logo.png" 
               alt="Mumbaikar Travels Logo" 
               className="h-12 md:h-14 w-auto object-contain"
             />
-            <div>
-              <h1 className="text-base md:text-lg font-bold text-primary-foreground">Mumbaikar Travels</h1>
-              <p className="text-xs text-primary-foreground/70 hidden sm:block">Premium Cab Service</p>
-            </div>
+          </div>
+
+          {/* Centered Company Name */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:block">
+            <h1 className="text-2xl font-bold text-white whitespace-nowrap">
+              Mumbaikar
+              <br />
+              <span className="text-base font-normal">Travels</span>
+            </h1>
           </div>
 
           {/* Desktop Navigation */}
