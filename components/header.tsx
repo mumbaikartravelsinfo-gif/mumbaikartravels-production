@@ -80,16 +80,48 @@ export function Header() {
       {/* Main navigation */}
       <nav className="max-w-7xl mx-auto px-4 py-3 md:py-4">
         <div className="flex items-center justify-between">
-          {/* Logo and Company Name */}
-          <div className="flex items-center gap-3">
+          {/* Mobile Layout: Logo Left, Title Center, Menu Right */}
+          <div className="flex md:hidden items-center justify-between w-full">
+            {/* Logo */}
             <img 
               src="/mumbai-kar-travels-logo.png" 
               alt="Mumbaikar Travels Logo" 
-              className="h-12 md:h-14 w-auto object-contain"
+              className="h-12 w-auto object-contain"
+            />
+            
+            {/* Centered Company Name */}
+            <div className="absolute left-1/2 transform -translate-x-1/2">
+              <div className="text-center leading-none -space-y-2">
+                <div className="text-2xl font-bold text-white">Mumbaikar</div>
+                <div className="text-base font-light ml-16 text-white">Travels</div>
+              </div>
+            </div>
+
+            {/* Hamburger Menu */}
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="p-2 hover:bg-white/10 transition-colors" 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6 text-white" />
+              ) : (
+                <Menu className="h-6 w-6 text-white" />
+              )}
+            </Button>
+          </div>
+
+          {/* Desktop Layout: Logo and Company Name */}
+          <div className="hidden md:flex items-center gap-3">
+            <img 
+              src="/mumbai-kar-travels-logo.png" 
+              alt="Mumbaikar Travels Logo" 
+              className="h-14 w-auto object-contain"
             />
             <div>
-              <h1 className="text-base md:text-lg font-bold text-primary-foreground">Mumbaikar Travels</h1>
-              <p className="text-xs text-primary-foreground/70 hidden sm:block">Premium Cab Service</p>
+              <h1 className="text-lg font-bold text-primary-foreground">Mumbaikar Travels</h1>
+              <p className="text-xs text-primary-foreground/70">Premium Cab Service</p>
             </div>
           </div>
 
@@ -181,20 +213,6 @@ export function Header() {
               WordPress
             </a>
           </div>
-
-          {/* Mobile menu button */}
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="md:hidden p-2 hover:bg-white/10 transition-colors" 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? (
-              <X className="h-6 w-6 text-white" />
-            ) : (
-              <Menu className="h-6 w-6 text-white" />
-            )}
-          </Button>
         </div>
 
         {/* Mobile Navigation */}
