@@ -17,9 +17,10 @@ interface BookingModalProps {
   serviceType?: string
   selectedDestination?: string
   selectedSource?: string
+  selectedCar?: string
 }
 
-export function BookingModal({ isOpen, onClose, serviceType, selectedDestination, selectedSource }: BookingModalProps) {
+export function BookingModal({ isOpen, onClose, serviceType, selectedDestination, selectedSource, selectedCar }: BookingModalProps) {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -27,18 +28,20 @@ export function BookingModal({ isOpen, onClose, serviceType, selectedDestination
     dropLocation: "",
     travelDate: "",
     passengers: "",
+    carType: "",
   })
 
-  // Pre-fill destination and source when provided
+  // Pre-fill destination and source when provided (but NOT for car rentals)
   useEffect(() => {
     if (isOpen) {
       setFormData(prev => ({
         ...prev,
-        dropLocation: selectedDestination || prev.dropLocation,
-        pickupLocation: selectedSource || prev.pickupLocation
+        dropLocation: serviceType === "car rental" ? "" : (selectedDestination || prev.dropLocation),
+        pickupLocation: selectedSource || prev.pickupLocation,
+        carType: selectedCar || prev.carType
       }))
     }
-  }, [selectedDestination, selectedSource, isOpen])
+  }, [selectedDestination, selectedSource, selectedCar, serviceType, isOpen])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -57,6 +60,7 @@ export function BookingModal({ isOpen, onClose, serviceType, selectedDestination
           dropLocation: formData.dropLocation,
           travelDate: formData.travelDate,
           passengers: formData.passengers,
+          carType: formData.carType,
           serviceType: serviceType
         })
       })
@@ -83,6 +87,7 @@ From: ${formData.pickupLocation}
 To: ${formData.dropLocation}
 Date: ${formData.travelDate}
 Passengers: ${formData.passengers}
+${formData.carType ? `Car Type: ${formData.carType}` : ""}
 ${serviceType ? `Service Type: ${serviceType}` : ""}
 
 Please provide me with the quote and availability.`
@@ -216,6 +221,23 @@ Please provide me with the quote and availability.`
               </Select>
             </div>
           </div>
+
+          {/* Car Type Field - Only show if a car was selected */}
+          {selectedCar && (
+            <div>
+              <Label htmlFor="carType" className="flex items-center gap-2 mb-2">
+                Selected Car
+              </Label>
+              <Input
+                id="carType"
+                value={formData.carType}
+                onChange={(e) => handleInputChange("carType", e.target.value)}
+                placeholder="Car type"
+                readOnly
+                className="bg-gray-50"
+              />
+            </div>
+          )}
 
           <div className="flex gap-3 pt-4">
             <Button

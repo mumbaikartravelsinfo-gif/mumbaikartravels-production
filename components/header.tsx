@@ -207,10 +207,10 @@ export function Header() {
             </div>
 
             <a href="/#cars" className="text-foreground hover:text-primary-foreground font-medium">
-              Fleet
+              Cars
             </a>
-            <a href="/wordpress" className="text-foreground hover:text-primary-foreground font-medium">
-              WordPress
+            <a href="/blogs" className="text-foreground hover:text-primary-foreground font-medium">
+              Blogs
             </a>
           </div>
         </div>
@@ -336,14 +336,14 @@ export function Header() {
                 className="text-white hover:text-white/80 font-medium py-3 px-3 rounded-lg hover:bg-white/10 transition-all" 
                 onClick={() => setIsMenuOpen(false)}
               >
-                Fleet
+                Cars
               </a>
               <a 
-                href="/wordpress" 
+                href="/blogs" 
                 className="text-white hover:text-white/80 font-medium py-3 px-3 rounded-lg hover:bg-white/10 transition-all" 
                 onClick={() => setIsMenuOpen(false)}
               >
-                WordPress
+                Blogs
               </a>
             </div>
           </div>

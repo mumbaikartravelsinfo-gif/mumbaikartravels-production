@@ -8,7 +8,7 @@ export function AboutSection() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="relative">
-            <img src="/professional-taxi-driver-smiling-uniform-mumbai-ca.jpg" alt="Professional taxi service" className="rounded-2xl shadow-2xl" />
+            <img src="/mumbai-kar-travels-logo.png" alt="Professional taxi service" className="rounded-2xl shadow-2xl" />
             <Card className="absolute -bottom-6 -right-6 bg-primary text-primary-foreground border-0 shadow-xl">
               <CardContent className="p-6 text-center">
                 <div className="text-3xl font-bold mb-2">5+</div>
@@ -60,7 +60,7 @@ export function AboutSection() {
                 </div>
                 <div>
                   <div className="text-sm text-muted-foreground">Call us now</div>
-                  <div className="font-bold text-foreground">+91-98824 56440</div>
+                  <div className="font-bold text-foreground">+91- 72084 91468</div>
                 </div>
               </div>
             </div>
