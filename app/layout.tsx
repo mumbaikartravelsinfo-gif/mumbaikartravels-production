@@ -22,6 +22,28 @@ export const metadata: Metadata = {
     ],
     shortcut: '/mumbai-kar-travels-logo.ico',
   },
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: 'https://www.mumbaikartravels.com',
+    siteName: 'Mumbaikar Travels',
+    title: 'Mumbaikar Travels - Premium Cab & Travel Services',
+    description: 'Book premium cab services and travel packages in Mumbai. Reliable, comfortable, and affordable transportation solutions.',
+    images: [
+      {
+        url: '/mumbai-kar-travels-logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Mumbaikar Travels Logo',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Mumbaikar Travels - Premium Cab & Travel Services',
+    description: 'Book premium cab services and travel packages in Mumbai. Reliable, comfortable, and affordable transportation solutions.',
+    images: ['/mumbai-kar-travels-logo.png'],
+  },
 }
 
 export default function RootLayout({
