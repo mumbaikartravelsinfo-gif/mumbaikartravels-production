@@ -14,12 +14,13 @@ export const metadata: Metadata = {
   viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
   icons: {
     icon: [
-      { url: '/mumbai-kar-travels-logo.png', sizes: 'any', type: 'image/png' },
+      { url: '/mumbai-kar-travels-logo.ico', sizes: 'any' },
+      { url: '/mumbai-kar-travels-logo.png', sizes: '32x32', type: 'image/png' },
     ],
     apple: [
       { url: '/mumbai-kar-travels-logo.png' },
     ],
-    shortcut: '/mumbai-kar-travels-logo.png',
+    shortcut: '/mumbai-kar-travels-logo.ico',
   },
 }
 
