@@ -138,7 +138,7 @@ export function PopularCars() {
         isOpen={isBookingModalOpen}
         onClose={() => setIsBookingModalOpen(false)}
         serviceType="car rental"
-        selectedCar={selectedCar}
+        selectedDestination={selectedCar}
       />
     </section>
   )

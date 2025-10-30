@@ -89,13 +89,13 @@ export function Header() {
               className="h-12 w-auto object-contain"
             />
             
-            {/* Centered Company Name */}
+            {/* Centered Company Name
             <div className="absolute left-1/2 transform -translate-x-1/2">
               <div className="text-center leading-none -space-y-2">
                 <div className="text-2xl font-bold text-white">Mumbaikar</div>
                 <div className="text-base font-light ml-16 text-white">Travels</div>
               </div>
-            </div>
+            </div> */}
 
             {/* Hamburger Menu */}
             <Button 
@@ -207,10 +207,10 @@ export function Header() {
             </div>
 
             <a href="/#cars" className="text-foreground hover:text-primary-foreground font-medium">
-              Cars
+              Fleet
             </a>
-            <a href="/blogs" className="text-foreground hover:text-primary-foreground font-medium">
-              Blogs
+            <a href="/wordpress" className="text-foreground hover:text-primary-foreground font-medium">
+              WordPress
             </a>
           </div>
         </div>
@@ -336,14 +336,14 @@ export function Header() {
                 className="text-white hover:text-white/80 font-medium py-3 px-3 rounded-lg hover:bg-white/10 transition-all" 
                 onClick={() => setIsMenuOpen(false)}
               >
-                Cars
+                Fleet
               </a>
               <a 
-                href="/blogs" 
+                href="/wordpress" 
                 className="text-white hover:text-white/80 font-medium py-3 px-3 rounded-lg hover:bg-white/10 transition-all" 
                 onClick={() => setIsMenuOpen(false)}
               >
-                Blogs
+                WordPress
               </a>
             </div>
           </div>
